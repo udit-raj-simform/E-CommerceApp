@@ -8,10 +8,10 @@ class RootScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(8.0),
-        child: const Center(
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: const [
               SizedBox(height: 30.0),
             ],
           ),
@@ -19,5 +19,4 @@ class RootScreen extends StatelessWidget {
       ),
     );
   }
-
 }
