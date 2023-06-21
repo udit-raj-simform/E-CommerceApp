@@ -25,6 +25,22 @@ mixin _$LoginStore on Login, Store {
     });
   }
 
+  late final _$isSignupScreenAtom =
+      Atom(name: 'Login.isSignupScreen', context: context);
+
+  @override
+  bool get isSignupScreen {
+    _$isSignupScreenAtom.reportRead();
+    return super.isSignupScreen;
+  }
+
+  @override
+  set isSignupScreen(bool value) {
+    _$isSignupScreenAtom.reportWrite(value, super.isSignupScreen, () {
+      super.isSignupScreen = value;
+    });
+  }
+
   late final _$isGuestUserAtom =
       Atom(name: 'Login.isGuestUser', context: context);
 
@@ -137,6 +153,28 @@ mixin _$LoginStore on Login, Store {
       ActionController(name: 'Login', context: context);
 
   @override
+  void goToRegistration() {
+    final _$actionInfo =
+        _$LoginActionController.startAction(name: 'Login.goToRegistration');
+    try {
+      return super.goToRegistration();
+    } finally {
+      _$LoginActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic gotoLogin() {
+    final _$actionInfo =
+        _$LoginActionController.startAction(name: 'Login.gotoLogin');
+    try {
+      return super.gotoLogin();
+    } finally {
+      _$LoginActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void login(BuildContext context, String? userName, String? password) {
     final _$actionInfo =
         _$LoginActionController.startAction(name: 'Login.login');
@@ -165,6 +203,17 @@ mixin _$LoginStore on Login, Store {
         _$LoginActionController.startAction(name: 'Login.signup');
     try {
       return super.signup(context, userName, email, password);
+    } finally {
+      _$LoginActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void logout(BuildContext context) {
+    final _$actionInfo =
+        _$LoginActionController.startAction(name: 'Login.logout');
+    try {
+      return super.logout(context);
     } finally {
       _$LoginActionController.endAction(_$actionInfo);
     }
@@ -207,6 +256,7 @@ mixin _$LoginStore on Login, Store {
   String toString() {
     return '''
 isLoggedIn: ${isLoggedIn},
+isSignupScreen: ${isSignupScreen},
 isGuestUser: ${isGuestUser},
 userModel: ${userModel},
 loginStatusMessage: ${loginStatusMessage},

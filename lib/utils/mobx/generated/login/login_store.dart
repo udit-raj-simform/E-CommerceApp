@@ -1,6 +1,4 @@
-import 'package:e_commerce_app/values/app_functions/app_global_functions.dart';
-
-import '../../../values/app_globals/app_exports.dart';
+import '../../../../values/app_globals/app_exports.dart';
 
 part 'login_store.g.dart';
 
@@ -9,6 +7,9 @@ class LoginStore = Login with _$LoginStore;
 abstract class Login with Store {
   @observable
   bool isLoggedIn = false;
+
+  @observable
+  bool isSignupScreen = false;
 
   @observable
   bool? isGuestUser;
@@ -30,6 +31,12 @@ abstract class Login with Store {
 
   @observable
   String? password;
+
+  @action
+  void goToRegistration() => isSignupScreen = true;
+
+  @action
+  gotoLogin() => isSignupScreen = false;
 
   @action
   void login(BuildContext context, String? userName, String? password) {
@@ -104,13 +111,20 @@ abstract class Login with Store {
       loginStatusMessage = "SignUp Successful";
       isLoggedIn = true;
     } catch (e) {
-      debugPrint(e.toString());
       loginStatusMessage = e.toString();
       isLoggedIn = false;
       isGuestUser = false;
     } finally {
       AppGlobalFunctions().showSnackBar(context, loginStatusMessage);
     }
+  }
+
+  @action
+  void logout(BuildContext context) {
+    isGuestUser = false;
+    isLoggedIn = false;
+    loginStatusMessage = "Your login session ended";
+    AppGlobalFunctions().showSnackBar(context, loginStatusMessage);
   }
 
   @action

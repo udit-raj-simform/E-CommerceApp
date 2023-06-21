@@ -1,6 +1,4 @@
-import 'package:e_commerce_app/utils/mobx/generated/login_store.dart';
 import 'package:e_commerce_app/values/app_globals/app_exports.dart';
-import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,14 +11,12 @@ class _LoginScreenState extends State<LoginScreen> {
   late final TextEditingController _usernameController;
   late final TextEditingController _passwordController;
 
-  // late final LoginStore loginStore;
   bool showPassword = false;
 
   @override
   void initState() {
     _usernameController = TextEditingController();
     _passwordController = TextEditingController();
-    // loginStore = LoginStore();
     super.initState();
   }
 
@@ -56,10 +52,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: InputDecoration(
                   labelText: 'Password',
                   suffixIcon: IconButton(
-                      onPressed: () => setState(() {
-                            showPassword = !showPassword;
-                          }),
-                      icon: const Icon(Icons.remove_red_eye_outlined)),
+                    onPressed: () => setState(() {
+                      showPassword = !showPassword;
+                    }),
+                    icon: Icon(
+                      showPassword
+                          ? Icons.remove_red_eye_outlined
+                          : Icons.visibility_off_outlined,
+                    ),
+                  ),
                 ),
                 obscureText: showPassword,
               ),
@@ -78,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
-                    Colors.yellow.withOpacity(0.6),
+                    Colors.blue.withOpacity(0.6),
                   ),
                 ),
                 child: const Padding(
@@ -89,6 +90,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 onPressed: () => context.read<LoginStore>().guestLogin(context),
               ),
+              const SizedBox(height: 25.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const Text("Not Registered Yet? "),
+                  TextButton(
+                    onPressed: () =>
+                        context.read<LoginStore>().goToRegistration(),
+                    child: const Text("Register"),
+                  ),
+                ],
+              )
             ],
           ),
         ),

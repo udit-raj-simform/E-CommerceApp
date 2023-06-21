@@ -9,7 +9,10 @@ class AppGlobalFunctions {
 
   showSnackBar(BuildContext context, String content) {
     ScaffoldMessenger.maybeOf(context)?.clearSnackBars();
-    ScaffoldMessenger.maybeOf(context)
-        ?.showSnackBar(SnackBar(content: Text(content)));
+    ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+      SnackBar(
+        content: Text(content),
+      ),
+    );
   }
 }

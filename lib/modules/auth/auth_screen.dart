@@ -1,7 +1,7 @@
 import 'package:e_commerce_app/modules/auth/login_screen.dart';
-import 'package:e_commerce_app/utils/mobx/generated/login_store.dart';
+import 'package:e_commerce_app/modules/auth/sign_up_screen.dart';
+import 'package:e_commerce_app/utils/mobx/generated/cart/cart_store.dart';
 import 'package:e_commerce_app/values/app_globals/app_exports.dart';
-import 'package:provider/provider.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
@@ -11,9 +11,14 @@ class AuthScreen extends StatelessWidget {
     return Observer(
       builder: (_) {
         if (context.read<LoginStore>().isLoggedIn) {
+          context.read<CartStore>().initializeItemCount();
           return const RootScreen();
         } else {
-          return const LoginScreen();
+          if (context.read<LoginStore>().isSignupScreen) {
+            return const SignUpScreen();
+          } else {
+            return const LoginScreen();
+          }
         }
       },
     );
